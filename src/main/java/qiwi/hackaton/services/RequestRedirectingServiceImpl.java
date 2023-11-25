@@ -8,12 +8,7 @@ import qiwi.hackaton.models.Response;
 public class RequestRedirectingServiceImpl implements RequestRedirectingService {
 
     @Override
-    public Response createVisaPayment(Request request){
-        return null;
-    }
-
-    @Override
-    public Response createMasterPayment(Request request) {
+    public Response createPayment(Request request){
         return null;
     }
 
