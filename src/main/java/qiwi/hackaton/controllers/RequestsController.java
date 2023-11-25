@@ -3,14 +3,9 @@ package qiwi.hackaton.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
-import qiwi.hackaton.models.Request;
-import qiwi.hackaton.models.Response;
 import qiwi.hackaton.services.CachingService;
 import qiwi.hackaton.services.RequestRedirectingService;
-
-import java.util.Optional;
 
 @RestController
 public class RequestsController {
@@ -27,14 +22,13 @@ public class RequestsController {
 
 
     @DeleteMapping("/delete")
-    public void deleteCache(){
+    public void deleteCache() {
         cachingService.clearCache();
     }
 
     @RequestMapping(value = "/**", method = {RequestMethod.POST, RequestMethod.PUT})
-    public String createPayment(HttpServletRequest httpServletRequest){
-
-        return httpServletRequest.getServletPath();
+    public String createPayment(HttpServletRequest httpServletRequest, String body){
+        return httpServletRequest.toString();
     }
     @GetMapping("/ping")
     public String ping(){

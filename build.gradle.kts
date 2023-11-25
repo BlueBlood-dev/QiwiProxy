@@ -15,6 +15,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
     compileOnly ("org.projectlombok:lombok:1.18.26")
     annotationProcessor ("org.projectlombok:lombok:1.18.26")
+    implementation("com.google.guava:guava:32.1.3-jre")
+
 }
 
 tasks.test {
