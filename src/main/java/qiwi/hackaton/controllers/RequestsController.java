@@ -7,32 +7,55 @@ import org.springframework.web.bind.annotation.*;
 import qiwi.hackaton.models.Response;
 import qiwi.hackaton.models.Request;
 import qiwi.hackaton.services.CachingService;
+import qiwi.hackaton.services.RequestRedirectingService;
+
+import java.util.Optional;
 
 @Controller
 public class RequestsController {
 
     private final CachingService cachingService;
 
+    private final RequestRedirectingService requestRedirectingService;
+
     @Autowired
-    public RequestsController(CachingService cachingService) {
+    public RequestsController(CachingService cachingService, RequestRedirectingService requestingService) {
         this.cachingService = cachingService;
+        this.requestRedirectingService = requestingService;
     }
 
-    @PutMapping
+    @PutMapping("/visa")
     @ResponseBody
     public Response createVisaPayment(@RequestBody Request request){
-        return new Response();
+        Optional<Response> response = cachingService.getCachedResponse(request);
+        if(response.isEmpty()) {
+            Response partnerResponse = requestRedirectingService.createVisaPayment(request);
+            cachingService.saveToCache(request, partnerResponse);
+            return partnerResponse;
+        }
+        return response.get();
     }
 
 
-    @PostMapping
+    @PostMapping("/master")
     @ResponseBody
     public Response createMasterPayment(@RequestBody Request request){
-        return new Response();
+        Optional<Response> response = cachingService.getCachedResponse(request);
+        if(response.isEmpty()) {
+            Response partnerResponse = requestRedirectingService.createMasterPayment(request);
+            cachingService.saveToCache(request, partnerResponse);
+            return partnerResponse;
+        }
+        return response.get();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/delete")
     public void deleteCache(){
+        cachingService.clearCache();
+    }
 
+    @GetMapping("/ping")
+    public void ping(){
+        System.out.println("Pong");
     }
 }

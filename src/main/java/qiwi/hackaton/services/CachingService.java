@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface CachingService {
     Optional<Response> getCachedResponse(Request request);
+
+    void saveToCache(Request request, Response response);
+
+    void clearCache();
 }

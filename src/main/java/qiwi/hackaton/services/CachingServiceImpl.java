@@ -8,8 +8,20 @@ import java.util.Optional;
 
 @Service
 public class CachingServiceImpl implements CachingService{
+
     @Override
     public Optional<Response> getCachedResponse(Request request) {
         return null;
+    }
+
+    @Override
+    public void saveToCache(Request request, Response response) {
+
+    }
+
+
+    @Override
+    public void clearCache() {
+
     }
 }
